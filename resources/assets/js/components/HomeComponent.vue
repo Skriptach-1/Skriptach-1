@@ -5,13 +5,27 @@
 				<div class="card">
                     <div class="card-body">
 						<template v-if="status == 'ok' && report.length == 0">
-							<h2 class="card-title">Question</h2>
+							<h2 class="card-title">Questions</h2>
 							<form method="POST" action="#" @submit.prevent="sendAnswer">
-								<p class="lead">{{questionTitle}}</p>
+								<div class="list-group">
+									<div v-for="(_question, n) in questionsList" class="list-group-item list-group-item-action flex-column align-items-start">
+										<div class="d-flex w-100 justify-content-between">
+											<h5 class="mb-1">{{_question.title}}</h5>
+										</div>
+										<p class="mb-1">
+											<div v-for="answer in _question.answers" class="form-check">
+												<input class="form-check-input" type="radio" v-model="selectedList[n]" v-bind:value="answer">
+												<label class="form-check-label">{{answer.title}}</label>
+											</div>
+										</p>
+									</div>
+								</div>
+
+								<!--p class="lead">{{questionTitle}}</p>
 								<div v-for="answer in answers" class="form-check">
 									<input class="form-check-input" type="radio" v-model="selectedAnswer" v-bind:value="answer" name="answer">
 									<label class="form-check-label">{{answer.title}}</label>
-								</div>
+								</div-->
 								<button class="btn btn-default" type="submit" id="answerBtn" data-loading-text="Saving...">Answer</button>
 							</form>
 						</template>
@@ -51,6 +65,8 @@ export default {
 			isTable: false,
 			isCard: true,
 			status: '',
+			questionsList: {},
+			selectedList: [{}],
 			questionTitle: '',
 			answers: [],
 			message: '',
@@ -70,6 +86,13 @@ export default {
             if (resp.data.meta.status === 'ok') {
             	component.questionTitle = resp.data.data.question.title + '?';
             	component.answers = resp.data.data.question.answers;
+            	component.questionsList = resp.data.data.questions;
+            	/*for (let item in resp.data.data.questions) {
+            		component.questionsList.push({
+		    			question_id: item.question_id,
+		    			answer_id: item.id
+		    		});
+            	}*/
                 component.$store.dispatch(Types.FETCH_QUESTION, resp.data.data.question);
             } else {
                 component.message = resp.data.meta.message;
@@ -83,11 +106,28 @@ export default {
     	sendAnswer: function() {
     		let component = this;
     		let user = this.$store.getters.authUser;
+    		let answers = [];
+    		$.each(component.selectedList, function(k, item) {
+    			let d = {
+	    			question_id: item.question_id,
+	    			answer_id: item.id
+	    		};
+    			answers.push(d);
+    		});
+    		/*for (let item in component.selectedList) {
+    			console.log(item, o);
+    			let d = {
+	    			question_id: item.question_id,
+	    			answer_id: item.id
+	    		};
+    			answers.push(d);
+    		}*/
+    		console.log(answers);
     		let data = {
     			question_id: component.selectedAnswer.question_id,
     			answer_id: component.selectedAnswer.id
     		};
-    		axios.post('/api/question', data).then((resp) => {
+    		axios.post('/api/question', answers).then((resp) => {
     			if (resp.data.meta.status === 'ok') {
     				component.report = resp.data.data.report;
     			} else {

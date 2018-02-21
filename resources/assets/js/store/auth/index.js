@@ -37,8 +37,9 @@ const mutations = {
     [Types.FETCH_USER](state, resp) {
     	state.user = resp.user;
     },
-    [Types.FETCH_QUESTION](state, resp) {
+    [Types.FETCH_QUESTION](state, resp, questions) {
         state.question = resp.question;
+        state.question = questions;
     }
 };
 const actions = {
@@ -63,8 +64,8 @@ const actions = {
     		}
     	});
     },
-    [Types.FETCH_QUESTION]({commit}, data) {
-        commit(Types.FETCH_QUESTION, data);
+    [Types.FETCH_QUESTION]({commit}, data, questions) {
+        commit(Types.FETCH_QUESTION, data, questions);
     }
 };
 

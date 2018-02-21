@@ -67,6 +67,24 @@ class UserController extends Controller
 			$this->setMeta('status', 'fail');
             return response()->json($this->setResponse());
 		}
+		$faker = \Faker\Factory::create();
+		$questions = Question::inRandomOrder()
+			->limit($faker->numberBetween(3, 4))
+			->get();
+		if ($questions) {
+			$this->setMeta('status', 'ok');
+			$data = [];
+			foreach ($questions as $question) {
+				$data[] = [
+		        	'title' => $question->title,
+		        	'answers' => $question->answers->makeHidden([
+		        		'created_at',
+		        		'updated_at',
+		        	])
+		        ];
+			}
+			$this->setData('questions', $data);
+		}
 		$question = Question::inRandomOrder()->first();
 		if ($question) {
 			$this->setMeta('status', 'ok');
@@ -92,11 +110,15 @@ class UserController extends Controller
 		}
 		try {
 			$payload = json_decode($request->getContent());
-			$report = new Report;
-			$report->question_id = intval($payload->question_id);
-			$report->answer_id = intval($payload->answer_id);
-			$report->save();
-			$user->report()->save($report);
+			if (sizeof($payload) > 0) {
+				foreach ($payload as $item) {
+					$report = new Report;
+					$report->question_id = intval($item->question_id);
+					$report->answer_id = intval($item->answer_id);
+					$report->save();
+					$user->report()->save($report);
+				}
+			}
 			$reports = \DB::table('reports')
 				->select(['questions.title AS question', 'answers.title AS answer', 'reports.created_at'])
 				->join('questions', 'reports.question_id', '=', 'questions.id')

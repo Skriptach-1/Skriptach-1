@@ -18873,8 +18873,9 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     state.question = [];
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER */], function (state, resp) {
     state.user = resp.user;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (state, resp) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (state, resp, questions) {
     state.question = resp.question;
+    state.question = questions;
 }), _mutations);
 var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["f" /* SAVE_USER */], function (_ref, resp) {
     var commit = _ref.commit;
@@ -18902,10 +18903,10 @@ var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODUL
             commit(__WEBPACK_IMPORTED_MODULE_0__Types__["e" /* LOGOUT */]);
         }
     });
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (_ref6, data) {
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (_ref6, data, questions) {
     var commit = _ref6.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], data);
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], data, questions);
 }), _actions);
 
 var getters = {
@@ -19706,6 +19707,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19717,6 +19732,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       isTable: false,
       isCard: true,
       status: '',
+      questionsList: {},
+      selectedList: [{}],
       questionTitle: '',
       answers: [],
       message: '',
@@ -19736,6 +19753,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (resp.data.meta.status === 'ok') {
         component.questionTitle = resp.data.data.question.title + '?';
         component.answers = resp.data.data.question.answers;
+        component.questionsList = resp.data.data.questions;
+        /*for (let item in resp.data.data.questions) {
+        	component.questionsList.push({
+        question_id: item.question_id,
+        answer_id: item.id
+        });
+        }*/
         component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.question);
       } else {
         component.message = resp.data.meta.message;
@@ -19750,11 +19774,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendAnswer: function sendAnswer() {
       var component = this;
       var user = this.$store.getters.authUser;
+      var answers = [];
+      $.each(component.selectedList, function (k, item) {
+        var d = {
+          question_id: item.question_id,
+          answer_id: item.id
+        };
+        answers.push(d);
+      });
+      /*for (let item in component.selectedList) {
+      	console.log(item, o);
+      	let d = {
+      		question_id: item.question_id,
+      		answer_id: item.id
+      	};
+      	answers.push(d);
+      }*/
+      console.log(answers);
       var data = {
         question_id: component.selectedAnswer.question_id,
         answer_id: component.selectedAnswer.id
       };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/question', data).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/question', answers).then(function (resp) {
         if (resp.data.meta.status === 'ok') {
           component.report = resp.data.data.report;
         } else {
@@ -19795,7 +19836,7 @@ var render = function() {
                 _vm.status == "ok" && _vm.report.length == 0
                   ? [
                       _c("h2", { staticClass: "card-title" }, [
-                        _vm._v("Question")
+                        _vm._v("Questions")
                       ]),
                       _vm._v(" "),
                       _c(
@@ -19810,39 +19851,80 @@ var render = function() {
                           }
                         },
                         [
-                          _c("p", { staticClass: "lead" }, [
-                            _vm._v(_vm._s(_vm.questionTitle))
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.answers, function(answer) {
-                            return _c("div", { staticClass: "form-check" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.selectedAnswer,
-                                    expression: "selectedAnswer"
-                                  }
-                                ],
-                                staticClass: "form-check-input",
-                                attrs: { type: "radio", name: "answer" },
-                                domProps: {
-                                  value: answer,
-                                  checked: _vm._q(_vm.selectedAnswer, answer)
+                          _c(
+                            "div",
+                            { staticClass: "list-group" },
+                            _vm._l(_vm.questionsList, function(_question, n) {
+                              return _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "list-group-item list-group-item-action flex-column align-items-start"
                                 },
-                                on: {
-                                  change: function($event) {
-                                    _vm.selectedAnswer = answer
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("label", { staticClass: "form-check-label" }, [
-                                _vm._v(_vm._s(answer.title))
-                              ])
-                            ])
-                          }),
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex w-100 justify-content-between"
+                                    },
+                                    [
+                                      _c("h5", { staticClass: "mb-1" }, [
+                                        _vm._v(_vm._s(_question.title))
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "mb-1" }),
+                                  _vm._l(_question.answers, function(answer) {
+                                    return _c(
+                                      "div",
+                                      { staticClass: "form-check" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.selectedList[n],
+                                              expression: "selectedList[n]"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: { type: "radio" },
+                                          domProps: {
+                                            value: answer,
+                                            checked: _vm._q(
+                                              _vm.selectedList[n],
+                                              answer
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.selectedList,
+                                                n,
+                                                answer
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          { staticClass: "form-check-label" },
+                                          [_vm._v(_vm._s(answer.title))]
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  _vm._v(" "),
+                                  _c("p")
+                                ],
+                                2
+                              )
+                            })
+                          ),
                           _vm._v(" "),
                           _c(
                             "button",
@@ -19856,8 +19938,7 @@ var render = function() {
                             },
                             [_vm._v("Answer")]
                           )
-                        ],
-                        2
+                        ]
                       )
                     ]
                   : _vm.status == "ok" && _vm.report.length > 0
