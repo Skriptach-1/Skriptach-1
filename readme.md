@@ -27,8 +27,12 @@ To change questions just add/change values in `$questions` array and run `php ar
 
 ## Application details
 
-# Models placed in app/Models:
+### Models placed in `app/Models`:
 - `Answer.php` contains all answers with relations to questions 
 - `Question.php` contains all questions
 - `Report.php` contains info about question, response, user who respond and timestamps
 - `User.php` users with relation to reports
+
+### Main logic
+
+Main logic placed in app/Http/Api/UserController.php -- methods are commented
