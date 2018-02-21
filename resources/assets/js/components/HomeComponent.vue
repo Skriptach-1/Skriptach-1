@@ -20,12 +20,6 @@
 										</p>
 									</div>
 								</div>
-
-								<!--p class="lead">{{questionTitle}}</p>
-								<div v-for="answer in answers" class="form-check">
-									<input class="form-check-input" type="radio" v-model="selectedAnswer" v-bind:value="answer" name="answer">
-									<label class="form-check-label">{{answer.title}}</label>
-								</div-->
 								<button class="btn btn-default" type="submit" id="answerBtn" data-loading-text="Saving...">Answer</button>
 							</form>
 						</template>
@@ -70,11 +64,7 @@ export default {
 			questionTitle: '',
 			answers: [],
 			message: '',
-			report: [],
-			selectedAnswer: {
-				id: '',
-				question_id: ''
-			}
+			report: []
 		};
 	},
 	mounted() {
@@ -82,18 +72,13 @@ export default {
 		component.reports = [];
 		component.isCard = true;
 		component.isTable = false;
+		/**
+		 * request for questions list
+		 */
 		axios.get('/api/question').then((resp) => {
             if (resp.data.meta.status === 'ok') {
-            	component.questionTitle = resp.data.data.question.title + '?';
-            	component.answers = resp.data.data.question.answers;
             	component.questionsList = resp.data.data.questions;
-            	/*for (let item in resp.data.data.questions) {
-            		component.questionsList.push({
-		    			question_id: item.question_id,
-		    			answer_id: item.id
-		    		});
-            	}*/
-                component.$store.dispatch(Types.FETCH_QUESTION, resp.data.data.question);
+                component.$store.dispatch(Types.FETCH_QUESTION, resp.data.data.questions);
             } else {
                 component.message = resp.data.meta.message;
             }
@@ -114,19 +99,6 @@ export default {
 	    		};
     			answers.push(d);
     		});
-    		/*for (let item in component.selectedList) {
-    			console.log(item, o);
-    			let d = {
-	    			question_id: item.question_id,
-	    			answer_id: item.id
-	    		};
-    			answers.push(d);
-    		}*/
-    		console.log(answers);
-    		let data = {
-    			question_id: component.selectedAnswer.question_id,
-    			answer_id: component.selectedAnswer.id
-    		};
     		axios.post('/api/question', answers).then((resp) => {
     			if (resp.data.meta.status === 'ok') {
     				component.report = resp.data.data.report;

@@ -19715,100 +19715,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      isTable: false,
-      isCard: true,
-      status: '',
-      questionsList: {},
-      selectedList: [{}],
-      questionTitle: '',
-      answers: [],
-      message: '',
-      report: [],
-      selectedAnswer: {
-        id: '',
-        question_id: ''
-      }
-    };
-  },
-  mounted: function mounted() {
-    var component = this;
-    component.reports = [];
-    component.isCard = true;
-    component.isTable = false;
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/question').then(function (resp) {
-      if (resp.data.meta.status === 'ok') {
-        component.questionTitle = resp.data.data.question.title + '?';
-        component.answers = resp.data.data.question.answers;
-        component.questionsList = resp.data.data.questions;
-        /*for (let item in resp.data.data.questions) {
-        	component.questionsList.push({
-        question_id: item.question_id,
-        answer_id: item.id
-        });
-        }*/
-        component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.question);
-      } else {
-        component.message = resp.data.meta.message;
-      }
-      component.status = resp.data.meta.status;
-    }, function (err) {
-      console.log(err);
-    });
-  },
-
-  methods: {
-    sendAnswer: function sendAnswer() {
-      var component = this;
-      var user = this.$store.getters.authUser;
-      var answers = [];
-      $.each(component.selectedList, function (k, item) {
-        var d = {
-          question_id: item.question_id,
-          answer_id: item.id
+    data: function data() {
+        return {
+            isTable: false,
+            isCard: true,
+            status: '',
+            questionsList: {},
+            selectedList: [{}],
+            questionTitle: '',
+            answers: [],
+            message: '',
+            report: []
         };
-        answers.push(d);
-      });
-      /*for (let item in component.selectedList) {
-      	console.log(item, o);
-      	let d = {
-      		question_id: item.question_id,
-      		answer_id: item.id
-      	};
-      	answers.push(d);
-      }*/
-      console.log(answers);
-      var data = {
-        question_id: component.selectedAnswer.question_id,
-        answer_id: component.selectedAnswer.id
-      };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/question', answers).then(function (resp) {
-        if (resp.data.meta.status === 'ok') {
-          component.report = resp.data.data.report;
-        } else {
-          component.message = resp.data.meta.message;
+    },
+    mounted: function mounted() {
+        var component = this;
+        component.reports = [];
+        component.isCard = true;
+        component.isTable = false;
+        /**
+         * request for questions list
+         */
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/question').then(function (resp) {
+            if (resp.data.meta.status === 'ok') {
+                component.questionsList = resp.data.data.questions;
+                component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.questions);
+            } else {
+                component.message = resp.data.meta.message;
+            }
+            component.status = resp.data.meta.status;
+        }, function (err) {
+            console.log(err);
+        });
+    },
+
+    methods: {
+        sendAnswer: function sendAnswer() {
+            var component = this;
+            var user = this.$store.getters.authUser;
+            var answers = [];
+            $.each(component.selectedList, function (k, item) {
+                var d = {
+                    question_id: item.question_id,
+                    answer_id: item.id
+                };
+                answers.push(d);
+            });
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/question', answers).then(function (resp) {
+                if (resp.data.meta.status === 'ok') {
+                    component.report = resp.data.data.report;
+                } else {
+                    component.message = resp.data.meta.message;
+                }
+                component.status = resp.data.meta.status;
+                component.isCard = component.report.length == 0;
+                component.isTable = component.report.length > 0;
+            }, function (err) {
+                console.log(err);
+            });
         }
-        component.status = resp.data.meta.status;
-        component.isCard = component.report.length == 0;
-        component.isTable = component.report.length > 0;
-      }, function (err) {
-        console.log(err);
-      });
     }
-  }
 });
 
 /***/ }),

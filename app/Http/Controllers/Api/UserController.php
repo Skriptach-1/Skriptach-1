@@ -14,8 +14,19 @@ use App\Models\Report;
 
 class UserController extends Controller
 {
+	/**
+	 * Size of report page
+	 */
+	const REPORT_SIZE = 20;
+	/**
+	 * This trait intercepts response
+	 * It injects metadata for client side application and implements methods to add payload
+	 */
 	use ApiResponse;
 
+	/**
+	 * Implements authentication and add JWT token to response payload
+	 */
 	public function authenticate(Request $request)
 	{
 		$credentials = $request->only('email', 'password');
@@ -38,6 +49,9 @@ class UserController extends Controller
         return response()->json($this->setResponse());
 	}
 
+	/**
+	 * Just register/create User
+	 */
 	public function register(Request $request)
 	{
 		$user = new User();
@@ -50,6 +64,9 @@ class UserController extends Controller
         return response()->json($this->setResponse());
 	}
 
+	/**
+	 * Returns current user
+	 */
 	public function getUser()
 	{
 		if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -61,6 +78,9 @@ class UserController extends Controller
         return response()->json($this->setResponse());
 	}
 
+	/**
+	 * Returns questions list of 3|4 items selected in random order
+	 */
 	public function getQuestion()
 	{
 		if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -84,24 +104,17 @@ class UserController extends Controller
 		        ];
 			}
 			$this->setData('questions', $data);
-		}
-		$question = Question::inRandomOrder()->first();
-		if ($question) {
-			$this->setMeta('status', 'ok');
-	        $this->setData('question', [
-	        	'title' => $question->title,
-	        	'answers' => $question->answers->makeHidden([
-	        		'created_at',
-	        		'updated_at',
-	        	])
-	        ]);
-	    } else {
+		} else {
 	    	$this->setMeta('status', 'fail');
 	    	$this->setMeta('message', 'Questions not found');
 	    }
         return response()->json($this->setResponse());
 	}
 
+	/**
+	 * Post and save selected answers for questions into `reports` table 
+	 * Then select from `reports` latest (max. 20) answers
+	 */
 	public function postQuestion(Request $request)
 	{
 		if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -125,7 +138,7 @@ class UserController extends Controller
 				->join('answers', 'reports.answer_id', '=', 'answers.id')
 				->where('user_id', $user->id)
 				->orderBy('reports.created_at', 'DESC')
-				->limit(20)
+				->limit(self::REPORT_SIZE)
 				->get();
 			$this->setData('report', $reports);
 		} catch (Exception $e) {
