@@ -15,6 +15,9 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
     	\DB::table('questions')->delete();
+        /**
+         * Here you can add questions and answers as many as needed
+         */
     	$questions = [
     		'How you feel' => [
     			'Fine',
