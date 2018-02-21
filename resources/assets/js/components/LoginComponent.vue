@@ -47,10 +47,10 @@ export default {
                 password: this.fields.password
             };
             let component = this;
-            axios.post('/api/auth/login', dataFields).then((resp) => {
-                if (resp.data.status === 'ok') {
+            axios.post('/api/login', dataFields).then((resp) => {
+                if (resp.data.meta.status === 'ok') {
                     component.$store.dispatch(Types.SAVE_USER, resp);
-                    component.$router.push('/');
+                    component.$router.push('home');
                 } else {
                     component.message = resp.data.message;
                 }

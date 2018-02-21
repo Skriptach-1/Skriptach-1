@@ -14,21 +14,22 @@ const mutations = {
     [Types.SAVE_USER](state, resp) {
     	Cookies.set('auth_token', resp.data.data.token);
     	state.token = resp.data.data.token;
-        state.user.name = resp.data.user.name;
+        state.user.name = resp.data.data.user.name;
     },
     [Types.LOGOUT](state, resp) {
-    	state.token = '';
+    	state.token = null;
         state.user.name = '';
-        Cookies.remove('auth_token')
+        Cookies.remove('auth_token');
     },
     [Types.FETCH_USER_SUCCESS](state, resp) {
-    	console.log(state, resp);
+    	state.user.name = user.name;
     },
     [Types.FETCH_USER_FAILURE](state, resp) {
-    	console.log(state, resp);
+    	state.user.name = '';
+        state.token = null;
     },
     [Types.FETCH_USER](state, resp) {
-    	console.log(state, resp);
+    	state.user.name = user.name;
     }
 };
 const actions = {
@@ -45,9 +46,9 @@ const actions = {
     	commit(Types.FETCH_USER_FAILURE);
     },
     [Types.FETCH_USER]({commit}) {
-    	axios.get('/api/auth/me').then((resp) => {
-    		if (resp.data.status === 'ok') {
-    			commit(Types.FETCH_USER_SUCCESS, resp.data.user);
+    	axios.get('/api/user').then((resp) => {
+    		if (resp.data.meta.status === 'ok') {
+    			commit(Types.FETCH_USER_SUCCESS, resp.data.data.user);
     		} else {
     			commit(Types.LOGOUT);
     		}
@@ -58,7 +59,7 @@ const actions = {
 const getters = {
     authUser: state => state.user,
     authToken: state => state.token,
-    isLoggedIn: state => state.token !== undefined
+    isLoggedIn: state => state.token != undefined
 };
 
 export default {

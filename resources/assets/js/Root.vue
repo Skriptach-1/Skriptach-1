@@ -6,6 +6,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<span v-if="isLoggedIn" class="nav-text">{{authUser.name}}</span>
 				<ul class="navbar-nav">
 					<template v-if="isLoggedIn">
 						<li class="nav-item">
@@ -14,7 +15,7 @@
 					</template>
 					<template v-else>
 						<li class="nav-item">
-							<router-link class="nav-link" to="login">Sign In</router-link>
+							<router-link class="nav-link" to="/">Sign In</router-link>
 						</li>
 						<li class="nav-item">
 							<router-link class="nav-link" to="register">Register</router-link>

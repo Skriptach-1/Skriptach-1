@@ -18,6 +18,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 		'vuex', 
 		'vuex-router-sync',
 		'js-cookie',
-		'axios'
+		'axios',
+		'lodash'
 	])
 	.sass('resources/assets/sass/app.scss', 'public/css');

@@ -12,13 +12,13 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'home',
-			component: HomeComponent
-		},
-		{
-			path: '/login',
 			name: 'login',
 			component: LoginComponent
+		},
+		{
+			path: '/home',
+			name: 'home',
+			component: HomeComponent
 		},
 		{
 			path: '/register',

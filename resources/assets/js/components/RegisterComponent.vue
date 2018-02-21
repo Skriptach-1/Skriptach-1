@@ -18,6 +18,10 @@
                                 <label>Password</label>
                                 <input type="password" name="password" class="form-control" v-model="fields.password" required>
                             </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" name="confirm_password" class="form-control" v-model="fields.confirm_password" required>
+                            </div>
                             <button class="btn btn-default" type="submit">Register</button>
                         </form>
                     </div>
@@ -33,10 +37,12 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            message: '',
             fields: {
             	name: '',
                 email: '',
-                password: ''
+                password: '',
+                confirm_password: ''
             }
         }
     },
@@ -50,8 +56,15 @@ export default {
                 password: this.fields.password
             };
             let component = this;
-            axios.post('/api/auth/register', dataFields).then((resp) => {
-                console.log(resp);
+            axios.post('/api/register', dataFields).then((resp) => {
+                component.message = resp.data.meta.message;
+                if (resp.data.meta.status === "ok") {
+                    component.user.email = '';
+                    component.user.password = '';
+                    component.user.name = '';
+                    component.user.confirm_password = '';
+                    $("#reg-success").modal('show');
+                }
             }, (err) => {
                 console.log(err);
             });
