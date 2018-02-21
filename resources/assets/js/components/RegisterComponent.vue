@@ -4,6 +4,7 @@
             <div class="col-6 mt-4">
                 <div class="card">
                     <div class="card-body">
+                        <div v-if="status == 'fail'" class="alert alert-danger" role="alert">{{message}}</div>
                         <h4 class="card-title">Register</h4>
                         <form method="POST" action="#" @submit.prevent="register">
                         	<div class="form-group">
@@ -27,6 +28,19 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"><h4>{{message}}</h4></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -37,6 +51,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            status: '',
             message: '',
             fields: {
             	name: '',
@@ -53,17 +68,19 @@ export default {
             let dataFields = {
             	name: this.fields.name,
                 email: this.fields.email,
-                password: this.fields.password
+                password: this.fields.password,
+                confirm_password: this.fields.confirm_password
             };
             let component = this;
             axios.post('/api/register', dataFields).then((resp) => {
                 component.message = resp.data.meta.message;
+                component.status = resp.data.meta.status;
                 if (resp.data.meta.status === "ok") {
-                    component.user.email = '';
-                    component.user.password = '';
-                    component.user.name = '';
-                    component.user.confirm_password = '';
-                    $("#reg-success").modal('show');
+                    component.fields.email = '';
+                    component.fields.password = '';
+                    component.fields.name = '';
+                    component.fields.confirm_password = '';
+                    $("#successModal").modal('show');
                 }
             }, (err) => {
                 console.log(err);

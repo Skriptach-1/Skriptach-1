@@ -18725,8 +18725,8 @@ var render = function() {
             },
             [
               _vm.isLoggedIn
-                ? _c("span", { staticClass: "nav-text" }, [
-                    _vm._v(_vm._s(_vm.authUser.name))
+                ? _c("span", { staticClass: "navbar-text" }, [
+                    _vm._v("Hi, " + _vm._s(_vm.authUser.name) + "! ")
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -18857,12 +18857,12 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     state.user.name = '';
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.remove('auth_token');
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_SUCCESS */], function (state, resp) {
-    state.user.name = user.name;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER_FAILURE */], function (state, resp) {
+    state.user.name = resp.name;
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER_FAILURE */], function (state) {
     state.user.name = '';
     state.token = null;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_USER */], function (state, resp) {
-    state.user.name = user.name;
+    state.user.name = resp.name;
 }), _mutations);
 var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["e" /* SAVE_USER */], function (_ref, resp) {
     var commit = _ref.commit;
@@ -19047,6 +19047,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -19055,6 +19056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            status: '',
             message: '',
             fields: {
                 email: '',
@@ -19076,7 +19078,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["e" /* SAVE_USER */], resp);
                     component.$router.push('home');
                 } else {
-                    component.message = resp.data.message;
+                    component.message = resp.data.meta.message;
+                    component.status = resp.data.meta.status;
                 }
             }, function (err) {
                 console.log(err.message);
@@ -19098,6 +19101,17 @@ var render = function() {
       _c("div", { staticClass: "col-6 mt-4" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
+            _vm.status == "fail"
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    attrs: { role: "alert" }
+                  },
+                  [_vm._v(_vm._s(_vm.message))]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c("h4", { staticClass: "card-title" }, [_vm._v("Login")]),
             _vm._v(" "),
             _c(
@@ -19275,12 +19289,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            status: '',
             message: '',
             fields: {
                 name: '',
@@ -19297,17 +19326,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var dataFields = {
                 name: this.fields.name,
                 email: this.fields.email,
-                password: this.fields.password
+                password: this.fields.password,
+                confirm_password: this.fields.confirm_password
             };
             var component = this;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', dataFields).then(function (resp) {
                 component.message = resp.data.meta.message;
+                component.status = resp.data.meta.status;
                 if (resp.data.meta.status === "ok") {
-                    component.user.email = '';
-                    component.user.password = '';
-                    component.user.name = '';
-                    component.user.confirm_password = '';
-                    $("#reg-success").modal('show');
+                    component.fields.email = '';
+                    component.fields.password = '';
+                    component.fields.name = '';
+                    component.fields.confirm_password = '';
+                    $("#successModal").modal('show');
                 }
             }, function (err) {
                 console.log(err);
@@ -19329,6 +19360,17 @@ var render = function() {
       _c("div", { staticClass: "col-6 mt-4" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
+            _vm.status == "fail"
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    attrs: { role: "alert" }
+                  },
+                  [_vm._v(_vm._s(_vm.message))]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c("h4", { staticClass: "card-title" }, [_vm._v("Register")]),
             _vm._v(" "),
             _c(
@@ -19464,11 +19506,69 @@ var render = function() {
             )
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "successModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalCenterTitle",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-dialog-centered",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.message))])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLongTitle" } },
+        [_vm._v("Modal title")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

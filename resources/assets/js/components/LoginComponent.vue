@@ -4,6 +4,7 @@
             <div class="col-6 mt-4">
                 <div class="card">
                     <div class="card-body">
+                        <div v-if="status == 'fail'" class="alert alert-danger" role="alert">{{message}}</div>
                         <h4 class="card-title">Login</h4>
                         <form method="POST" action="#" @submit.prevent="login">
                             <div class="form-group">
@@ -31,6 +32,7 @@ import * as Types from "../store/auth/Types";
 export default {
     data() {
         return {
+            status: '',
             message: '',
             fields: {
                 email: '',
@@ -52,7 +54,8 @@ export default {
                     component.$store.dispatch(Types.SAVE_USER, resp);
                     component.$router.push('home');
                 } else {
-                    component.message = resp.data.message;
+                    component.message = resp.data.meta.message;
+                    component.status = resp.data.meta.status;
                 }
             }, (err) => {
                 console.log(err.message);

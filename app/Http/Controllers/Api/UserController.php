@@ -29,7 +29,6 @@ class UserController extends Controller
 		}
 		$this->setMeta('status', 'ok');
         $this->setMeta('message', 'Logged in successfully.');
-        //$user = auth()->user()->makeHidden(['created_at', 'updated_at', 'id']);
         $user = JWTAuth::setToken($token)->toUser()->makeHidden(['created_at', 'updated_at', 'id']);
         $this->setData('token', $token);
         $this->setData('user', $user);

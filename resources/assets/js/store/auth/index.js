@@ -22,14 +22,14 @@ const mutations = {
         Cookies.remove('auth_token');
     },
     [Types.FETCH_USER_SUCCESS](state, resp) {
-    	state.user.name = user.name;
+    	state.user.name = resp.name;
     },
-    [Types.FETCH_USER_FAILURE](state, resp) {
+    [Types.FETCH_USER_FAILURE](state) {
     	state.user.name = '';
         state.token = null;
     },
     [Types.FETCH_USER](state, resp) {
-    	state.user.name = user.name;
+    	state.user.name = resp.name;
     }
 };
 const actions = {

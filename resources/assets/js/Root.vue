@@ -6,7 +6,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-				<span v-if="isLoggedIn" class="nav-text">{{authUser.name}}</span>
+				<span v-if="isLoggedIn" class="navbar-text">Hi, {{authUser.name}}! </span>
 				<ul class="navbar-nav">
 					<template v-if="isLoggedIn">
 						<li class="nav-item">
