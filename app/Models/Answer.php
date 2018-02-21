@@ -11,6 +11,9 @@ class Answer extends Model
 		'title'
 	];
 
+	/**
+	 * Relation to question
+	 */
 	public function question()
 	{
 		return $this->belongsTo(Question::class);

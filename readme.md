@@ -16,3 +16,19 @@ for dev environment:
 
 for prod envoronment:
 - npm run prod
+
+## Add/remove questions & answers
+
+Structure of array for questions data in file database/seeds/QuestionsTableSeeder.php:
+
+`$questions = ['question1' => ['answer1', 'answer2', 'answer3'], ['question2' => ['answerX', 'answerY', ...], ...];`
+
+To change questions just add/change values in `$questions` array and run `php artisan db:seed` in console.
+
+## Application details
+
+# Models placed in app/Models:
+- `Answer.php` contains all answers with relations to questions 
+- `Question.php` contains all questions
+- `Report.php` contains info about question, response, user who respond and timestamps
+- `User.php` users with relation to reports

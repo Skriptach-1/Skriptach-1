@@ -12,6 +12,9 @@ class Question extends Model
 		'title'
 	];
 
+	/**
+	 * Relation to question answers (one-to-many)
+	 */
 	public function answers()
 	{
 		return $this->hasMany(Answer::class);

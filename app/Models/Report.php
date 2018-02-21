@@ -13,6 +13,9 @@ class Report extends Model
         'question_id', 'answer_id',
     ];
 
+    /**
+     * Relation to user who answer question
+     */
     public function user()
 	{
 		return $this->belongsTo(User::class);
