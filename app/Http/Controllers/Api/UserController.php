@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\Question;
+use App\Models\Answer;
+use App\Models\Report;
 
 class UserController extends Controller
 {
@@ -66,14 +68,19 @@ class UserController extends Controller
             return response()->json($this->setResponse());
 		}
 		$question = Question::inRandomOrder()->first();
-		$this->setMeta('status', 'ok');
-        $this->setData('question', [
-        	'title' => $question->title,
-        	'answers' => $question->answers->makeHidden([
-        		'created_at',
-        		'updated_at',
-        	])
-        ]);
+		if ($question) {
+			$this->setMeta('status', 'ok');
+	        $this->setData('question', [
+	        	'title' => $question->title,
+	        	'answers' => $question->answers->makeHidden([
+	        		'created_at',
+	        		'updated_at',
+	        	])
+	        ]);
+	    } else {
+	    	$this->setMeta('status', 'fail');
+	    	$this->setMeta('message', 'Questions not found');
+	    }
         return response()->json($this->setResponse());
 	}
 
@@ -83,6 +90,28 @@ class UserController extends Controller
 			$this->setMeta('status', 'fail');
             return response()->json($this->setResponse());
 		}
-		dd($request->question, $request->answer, $user->id);
+		try {
+			$payload = json_decode($request->getContent());
+			$report = new Report;
+			$report->question_id = intval($payload->question_id);
+			$report->answer_id = intval($payload->answer_id);
+			$report->save();
+			$user->report()->save($report);
+			$reports = \DB::table('reports')
+				->select(['questions.title AS question', 'answers.title AS answer', 'reports.created_at'])
+				->join('questions', 'reports.question_id', '=', 'questions.id')
+				->join('answers', 'reports.answer_id', '=', 'answers.id')
+				->where('user_id', $user->id)
+				->orderBy('reports.created_at', 'DESC')
+				->limit(20)
+				->get();
+			$this->setData('report', $reports);
+		} catch (Exception $e) {
+			$this->setMeta('status', 'fail');
+			$this->setMeta('message', $e->getMessage());
+            return response()->json($this->setResponse());
+		}
+		$this->setMeta('status', 'ok');
+		return response()->json($this->setResponse());
 	}
 }

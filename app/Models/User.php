@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\Models\Question;
+use App\Models\Report;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -30,14 +30,14 @@ class User extends Authenticatable implements JWTSubject
         'photo_url',
     ];
 
-    public function questions()
-    {
-        $this->hasMany(Question::class);
-    }
-
     public function getPhotoUrlAttribute()
     {
         return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class);
     }
 
     public function getJWTIdentifier()

@@ -18917,9 +18917,6 @@ var getters = {
     },
     isLoggedIn: function isLoggedIn(state) {
         return state.token != undefined;
-    },
-    getQuestion: function getQuestion(state) {
-        return state.question;
     }
 };
 
@@ -19688,49 +19685,86 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			questionTitle: '',
-			answers: [],
-			selectedAnswer: {
-				id: '',
-				question_id: ''
-			}
-		};
-	},
+  data: function data() {
+    return {
+      isTable: false,
+      isCard: true,
+      status: '',
+      questionTitle: '',
+      answers: [],
+      message: '',
+      report: [],
+      selectedAnswer: {
+        id: '',
+        question_id: ''
+      }
+    };
+  },
+  mounted: function mounted() {
+    var component = this;
+    component.reports = [];
+    component.isCard = true;
+    component.isTable = false;
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/question').then(function (resp) {
+      if (resp.data.meta.status === 'ok') {
+        component.questionTitle = resp.data.data.question.title + '?';
+        component.answers = resp.data.data.question.answers;
+        component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.question);
+      } else {
+        component.message = resp.data.meta.message;
+      }
+      component.status = resp.data.meta.status;
+    }, function (err) {
+      console.log(err);
+    });
+  },
 
-	computed: {
-		getQuestion: function getQuestion() {
-			return this.$store.getters.getQuestion;
-		}
-	},
-	mounted: function mounted() {
-		var component = this;
-		__WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/question').then(function (resp) {
-			if (resp.data.meta.status === 'ok') {
-				component.questionTitle = resp.data.data.question.title + '?';
-				component.answers = resp.data.data.question.answers;
-				component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.question);
-			} else {
-				commit(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["e" /* LOGOUT */]);
-			}
-		}, function (err) {
-			console.log(err);
-		});
-	},
-
-	methods: {
-		sendAnswer: function sendAnswer() {
-			var component = this;
-			console.log(component.getQuestion);
-		}
-	}
+  methods: {
+    sendAnswer: function sendAnswer() {
+      var component = this;
+      var user = this.$store.getters.authUser;
+      var data = {
+        question_id: component.selectedAnswer.question_id,
+        answer_id: component.selectedAnswer.id
+      };
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/question', data).then(function (resp) {
+        if (resp.data.meta.status === 'ok') {
+          component.report = resp.data.data.report;
+        } else {
+          component.message = resp.data.meta.message;
+        }
+        component.status = resp.data.meta.status;
+        component.isCard = component.report.length == 0;
+        component.isTable = component.report.length > 0;
+      }, function (err) {
+        console.log(err);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -19743,91 +19777,143 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-6 mt-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              1
-                ? [
-                    _c("h2", { staticClass: "card-title" }, [
-                      _vm._v("Question")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "form",
-                      {
-                        attrs: { method: "POST", action: "#" },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            _vm.sendAnswer($event)
+      _c(
+        "div",
+        {
+          staticClass: "mt-4",
+          class: { "col-8": _vm.isTable, "col-6": _vm.isCard }
+        },
+        [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm.status == "ok" && _vm.report.length == 0
+                  ? [
+                      _c("h2", { staticClass: "card-title" }, [
+                        _vm._v("Question")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        {
+                          attrs: { method: "POST", action: "#" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.sendAnswer($event)
+                            }
                           }
-                        }
-                      },
-                      [
-                        _c("p", { staticClass: "lead" }, [
-                          _vm._v(_vm._s(_vm.questionTitle))
+                        },
+                        [
+                          _c("p", { staticClass: "lead" }, [
+                            _vm._v(_vm._s(_vm.questionTitle))
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.answers, function(answer) {
+                            return _c("div", { staticClass: "form-check" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedAnswer,
+                                    expression: "selectedAnswer"
+                                  }
+                                ],
+                                staticClass: "form-check-input",
+                                attrs: { type: "radio", name: "answer" },
+                                domProps: {
+                                  value: answer,
+                                  checked: _vm._q(_vm.selectedAnswer, answer)
+                                },
+                                on: {
+                                  change: function($event) {
+                                    _vm.selectedAnswer = answer
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", { staticClass: "form-check-label" }, [
+                                _vm._v(_vm._s(answer.title))
+                              ])
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-default",
+                              attrs: {
+                                type: "submit",
+                                id: "answerBtn",
+                                "data-loading-text": "Saving..."
+                              }
+                            },
+                            [_vm._v("Answer")]
+                          )
+                        ],
+                        2
+                      )
+                    ]
+                  : _vm.status == "ok" && _vm.report.length > 0
+                    ? [
+                        _c("h2", { staticClass: "card-title" }, [
+                          _vm._v(
+                            "Questions report (latest " +
+                              _vm._s(_vm.report.length) +
+                              " records)"
+                          )
                         ]),
                         _vm._v(" "),
-                        _vm._l(_vm.answers, function(answer) {
-                          return _c("div", { staticClass: "form-check" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectedAnswer,
-                                  expression: "selectedAnswer"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: { type: "radio", name: "answer" },
-                              domProps: {
-                                value: answer,
-                                checked: _vm._q(_vm.selectedAnswer, answer)
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.selectedAnswer = answer
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { staticClass: "form-check-label" }, [
-                              _vm._v(_vm._s(answer.title))
-                            ])
-                          ])
-                        }),
-                        _vm._v(" "),
                         _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-default",
-                            attrs: {
-                              type: "submit",
-                              id: "answerBtn",
-                              "data-loading-text":
-                                "<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Answer"
-                            }
-                          },
-                          [_vm._v("Answer")]
+                          "table",
+                          { staticClass: "table" },
+                          [
+                            _vm._m(0),
+                            _vm._v(" "),
+                            _vm._l(_vm.report, function(item) {
+                              return _c("tr", [
+                                _c("td", [_vm._v(_vm._s(item.question) + "?")]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.answer))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.created_at))])
+                              ])
+                            })
+                          ],
+                          2
                         )
-                      ],
-                      2
-                    )
-                  ]
-                : _vm._e()
-            ],
-            2
-          )
-        ])
-      ])
+                      ]
+                    : [
+                        _c("h2", { staticClass: "card-title" }, [
+                          _vm._v(_vm._s(_vm.message))
+                        ])
+                      ]
+              ],
+              2
+            )
+          ])
+        ]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Question")]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Answer")]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Date")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
