@@ -8,6 +8,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\Question;
 
 class UserController extends Controller
 {
@@ -56,5 +57,32 @@ class UserController extends Controller
 		$this->setMeta('status', 'ok');
         $this->setData('user', $user->makeHidden(['created_at', 'updated_at', 'id']));
         return response()->json($this->setResponse());
+	}
+
+	public function getQuestion()
+	{
+		if (!$user = JWTAuth::parseToken()->authenticate()) {
+			$this->setMeta('status', 'fail');
+            return response()->json($this->setResponse());
+		}
+		$question = Question::inRandomOrder()->first();
+		$this->setMeta('status', 'ok');
+        $this->setData('question', [
+        	'title' => $question->title,
+        	'answers' => $question->answers->makeHidden([
+        		'created_at',
+        		'updated_at',
+        	])
+        ]);
+        return response()->json($this->setResponse());
+	}
+
+	public function postQuestion(Request $request)
+	{
+		if (!$user = JWTAuth::parseToken()->authenticate()) {
+			$this->setMeta('status', 'fail');
+            return response()->json($this->setResponse());
+		}
+		dd($request->question, $request->answer, $user->id);
 	}
 }

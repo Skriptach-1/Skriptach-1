@@ -2,8 +2,52 @@ webpackJsonp([1],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
-/* 3 */,
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return LOGOUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SAVE_USER; });
+/* unused harmony export UPDATE_USER */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FETCH_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return FETCH_USER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FETCH_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FETCH_QUESTION; });
+/* unused harmony export SAVE_RESPONSE */
+var LOGOUT = 'LOGOUT';
+var SAVE_USER = 'SAVE_USER';
+var UPDATE_USER = 'UPDATE_USER';
+var FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+var FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+var FETCH_USER = 'FETCH_USER';
+var FETCH_QUESTION = 'FETCH_QUESTION';
+var SAVE_RESPONSE = 'SAVE_RESPONSE';
+
+/***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth__ = __webpack_require__(50);
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["default"]);
+
+var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({
+	modules: {
+		auth: __WEBPACK_IMPORTED_MODULE_2__auth__["a" /* default */]
+	}
+});
+
+/***/ }),
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -110,46 +154,6 @@ module.exports = function normalizeComponent (
   }
 }
 
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return LOGOUT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return SAVE_USER; });
-/* unused harmony export UPDATE_USER */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return FETCH_USER_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FETCH_USER_FAILURE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FETCH_USER; });
-var LOGOUT = 'LOGOUT';
-var SAVE_USER = 'SAVE_USER';
-var UPDATE_USER = 'UPDATE_USER';
-var FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-var FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
-var FETCH_USER = 'FETCH_USER';
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth__ = __webpack_require__(50);
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["default"]);
-
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({
-	modules: {
-		auth: __WEBPACK_IMPORTED_MODULE_2__auth__["a" /* default */]
-	}
-});
 
 /***/ }),
 /* 7 */,
@@ -12993,12 +12997,12 @@ module.exports = __webpack_require__(62);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Root__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Root___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Root__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_interceptors__ = __webpack_require__(61);
 __webpack_require__(22);
@@ -18590,7 +18594,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(6)
 /* script */
 var __vue_script__ = __webpack_require__(48)
 /* template */
@@ -18638,7 +18642,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_auth_Types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_auth_Types__ = __webpack_require__(3);
 //
 //
 //
@@ -18689,7 +18693,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		logout: function logout(evt) {
 			var component = this;
-			component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_0__store_auth_Types__["d" /* LOGOUT */]);
+			component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_0__store_auth_Types__["e" /* LOGOUT */]);
 			component.$router.push('/');
 		}
 	}
@@ -18827,7 +18831,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_js_cookie__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_js_cookie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_js_cookie__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(1);
@@ -18845,51 +18849,63 @@ var state = {
         name: '',
         email: ''
     },
+    question: {
+        title: '',
+        answers: []
+    },
     token: __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.get('auth_token')
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["e" /* SAVE_USER */], function (state, resp) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["f" /* SAVE_USER */], function (state, resp) {
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.set('auth_token', resp.data.data.token);
     state.token = resp.data.data.token;
-    state.user.name = resp.data.data.user.name;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["d" /* LOGOUT */], function (state, resp) {
+    state.user = resp.data.data.user;
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["e" /* LOGOUT */], function (state, resp) {
     state.token = null;
     state.user.name = '';
+    state.question = [];
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.remove('auth_token');
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_SUCCESS */], function (state, resp) {
-    state.user.name = resp.name;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER_FAILURE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["d" /* FETCH_USER_SUCCESS */], function (state, resp) {
+    state.user = resp.user;
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_FAILURE */], function (state) {
     state.user.name = '';
     state.token = null;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_USER */], function (state, resp) {
-    state.user.name = resp.name;
+    state.question = [];
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER */], function (state, resp) {
+    state.user = resp.user;
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (state, resp) {
+    state.question = resp.question;
 }), _mutations);
-var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["e" /* SAVE_USER */], function (_ref, resp) {
+var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["f" /* SAVE_USER */], function (_ref, resp) {
     var commit = _ref.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["e" /* SAVE_USER */], resp);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["d" /* LOGOUT */], function (_ref2) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["f" /* SAVE_USER */], resp);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["e" /* LOGOUT */], function (_ref2) {
     var commit = _ref2.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["d" /* LOGOUT */]);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_SUCCESS */], function (_ref3, user) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["e" /* LOGOUT */]);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["d" /* FETCH_USER_SUCCESS */], function (_ref3, data) {
     var commit = _ref3.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_SUCCESS */], user);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER_FAILURE */], function (_ref4) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["d" /* FETCH_USER_SUCCESS */], data);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_FAILURE */], function (_ref4) {
     var commit = _ref4.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER_FAILURE */]);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_USER */], function (_ref5) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_FAILURE */]);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["b" /* FETCH_USER */], function (_ref5) {
     var commit = _ref5.commit;
 
     __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/user').then(function (resp) {
         if (resp.data.meta.status === 'ok') {
-            commit(__WEBPACK_IMPORTED_MODULE_0__Types__["c" /* FETCH_USER_SUCCESS */], resp.data.data.user);
+            commit(__WEBPACK_IMPORTED_MODULE_0__Types__["d" /* FETCH_USER_SUCCESS */], resp.data.data);
         } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__Types__["d" /* LOGOUT */]);
+            commit(__WEBPACK_IMPORTED_MODULE_0__Types__["e" /* LOGOUT */]);
         }
     });
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], function (_ref6, data) {
+    var commit = _ref6.commit;
+
+    commit(__WEBPACK_IMPORTED_MODULE_0__Types__["a" /* FETCH_QUESTION */], data);
 }), _actions);
 
 var getters = {
@@ -18901,6 +18917,9 @@ var getters = {
     },
     isLoggedIn: function isLoggedIn(state) {
         return state.token != undefined;
+    },
+    getQuestion: function getQuestion(state) {
+        return state.question;
     }
 };
 
@@ -18916,17 +18935,17 @@ var getters = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_auth_Types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_auth_Types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_LoginComponent__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_LoginComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_LoginComponent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_RegisterComponent__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_RegisterComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_RegisterComponent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_HomeComponent__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_HomeComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_HomeComponent__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(4);
 
 
 
@@ -18955,7 +18974,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
 
 router.beforeEach(function (to, from, next) {
 	if (__WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */].getters.isLoggedIn) {
-		__WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */].dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_USER */]).then(function () {
+		__WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */].dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["b" /* FETCH_USER */]).then(function () {
 			return next();
 		});
 	} else {
@@ -18970,7 +18989,7 @@ router.beforeEach(function (to, from, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(6)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
@@ -19020,8 +19039,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_auth_Types__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_auth_Types__ = __webpack_require__(3);
 //
 //
 //
@@ -19073,14 +19092,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: this.fields.password
             };
             var component = this;
+            $('#loginBtn').button('loading');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/login', dataFields).then(function (resp) {
                 if (resp.data.meta.status === 'ok') {
-                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["e" /* SAVE_USER */], resp);
+                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["f" /* SAVE_USER */], resp);
                     component.$router.push('home');
                 } else {
                     component.message = resp.data.meta.message;
                     component.status = resp.data.meta.status;
                 }
+                $('#loginBtn').button('reset');
             }, function (err) {
                 console.log(err.message);
             });
@@ -19180,7 +19201,15 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-default", attrs: { type: "submit" } },
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: {
+                      type: "submit",
+                      id: "loginBtn",
+                      "data-loading-text":
+                        "<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Login"
+                    }
+                  },
                   [_vm._v("Login")]
                 )
               ]
@@ -19206,7 +19235,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(6)
 /* script */
 var __vue_script__ = __webpack_require__(56)
 /* template */
@@ -19583,7 +19612,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(6)
 /* script */
 var __vue_script__ = __webpack_require__(59)
 /* template */
@@ -19631,13 +19660,77 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_auth_Types__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {}
+	data: function data() {
+		return {
+			questionTitle: '',
+			answers: [],
+			selectedAnswer: {
+				id: '',
+				question_id: ''
+			}
+		};
+	},
+
+	computed: {
+		getQuestion: function getQuestion() {
+			return this.$store.getters.getQuestion;
+		}
+	},
+	mounted: function mounted() {
+		var component = this;
+		__WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/question').then(function (resp) {
+			if (resp.data.meta.status === 'ok') {
+				component.questionTitle = resp.data.data.question.title + '?';
+				component.answers = resp.data.data.question.answers;
+				component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["a" /* FETCH_QUESTION */], resp.data.data.question);
+			} else {
+				commit(__WEBPACK_IMPORTED_MODULE_2__store_auth_Types__["e" /* LOGOUT */]);
+			}
+		}, function (err) {
+			console.log(err);
+		});
+	},
+
+	methods: {
+		sendAnswer: function sendAnswer() {
+			var component = this;
+			console.log(component.getQuestion);
+		}
+	}
 });
 
 /***/ }),
@@ -19648,7 +19741,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h2", [_vm._v("HOME")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-6 mt-4" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              1
+                ? [
+                    _c("h2", { staticClass: "card-title" }, [
+                      _vm._v("Question")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "POST", action: "#" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            _vm.sendAnswer($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("p", { staticClass: "lead" }, [
+                          _vm._v(_vm._s(_vm.questionTitle))
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.answers, function(answer) {
+                          return _c("div", { staticClass: "form-check" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedAnswer,
+                                  expression: "selectedAnswer"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: { type: "radio", name: "answer" },
+                              domProps: {
+                                value: answer,
+                                checked: _vm._q(_vm.selectedAnswer, answer)
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.selectedAnswer = answer
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "form-check-label" }, [
+                              _vm._v(_vm._s(answer.title))
+                            ])
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: {
+                              type: "submit",
+                              id: "answerBtn",
+                              "data-loading-text":
+                                "<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Answer"
+                            }
+                          },
+                          [_vm._v("Answer")]
+                        )
+                      ],
+                      2
+                    )
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -19667,7 +19844,7 @@ if (false) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(4);
 
 
 

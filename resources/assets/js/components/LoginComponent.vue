@@ -15,7 +15,7 @@
                                 <label>Password</label>
                                 <input type="password" name="password" class="form-control" v-model="fields.password" required>
                             </div>
-                            <button class="btn btn-default" type="submit">Login</button>
+                            <button class="btn btn-default" type="submit" id="loginBtn" data-loading-text="<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Login">Login</button>
                         </form>
                     </div>
                 </div>
@@ -49,6 +49,7 @@ export default {
                 password: this.fields.password
             };
             let component = this;
+            $('#loginBtn').button('loading');
             axios.post('/api/login', dataFields).then((resp) => {
                 if (resp.data.meta.status === 'ok') {
                     component.$store.dispatch(Types.SAVE_USER, resp);
@@ -57,6 +58,7 @@ export default {
                     component.message = resp.data.meta.message;
                     component.status = resp.data.meta.status;
                 }
+                $('#loginBtn').button('reset');
             }, (err) => {
                 console.log(err.message);
             });

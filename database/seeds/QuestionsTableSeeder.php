@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Models\Question;
+use App\Models\Answer;
+
 class QuestionsTableSeeder extends Seeder
 {
     /**
@@ -11,6 +14,7 @@ class QuestionsTableSeeder extends Seeder
      */
     public function run()
     {
+    	\DB::table('questions')->delete();
     	$questions = [
     		'How you feel' => [
     			'Fine',
@@ -30,11 +34,15 @@ class QuestionsTableSeeder extends Seeder
     			'Nothing',
     		],
     	];
-    	\DB::table('questions')->delete();
-    	foreach ($questions as $question => $answers) {
-    		\DB::table('questions')->insert([
-    			'title' => $question,
-    		]);
+    	foreach ($questions as $title => $answers) {
+    		$question = new Question;
+    		$question->title = $title;
+    		$question->save();
+    		foreach ($answers as $value) {
+    			$answer = new Answer;
+    			$answer->title = $value;
+    			$question->answers()->save($answer);
+    		}
     	}
     }
 }
