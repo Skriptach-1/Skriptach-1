@@ -19365,6 +19365,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     component.fields.name = '';
                     component.fields.confirm_password = '';
                     $("#successModal").modal('show');
+                    $("#successModal").on('hidden.bs.modal', function (e) {
+                        component.$router.push('/');
+                    });
                 }
             }, function (err) {
                 console.log(err);
@@ -19577,7 +19580,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLongTitle" } },
-        [_vm._v("Modal title")]
+        [_vm._v("Registrer")]
       ),
       _vm._v(" "),
       _c(
